@@ -21,7 +21,7 @@
 	<div class="navbar navbar-fixed-top">
 		<div class="navbar-inner">
     		<div class="container">
-      			<h1>Trackr</h1>
+      			<h1>trackr</h1>
     		</div>
   		</div>
 	</div>

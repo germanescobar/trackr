@@ -1,6 +1,6 @@
 body {
 	background-color:whiteSmoke;
-	padding-top:80px;	
+	padding-top:30px;	
 }
 
 .navbar-inner {
@@ -16,6 +16,10 @@ body {
 }
 .navbar-inner h1 {
 	color: white;	
+}
+
+div#content {
+	padding-top: 40px;	
 }
 
 div.count {
@@ -77,4 +81,9 @@ div#services ul li span {
 	width:80px;
 	text-align:center;
 	vertical-align:middle;	
+}
+
+.fb_button_medium, .fb_button_medium_rtl {
+	font-size:14px !important;
+	line-height:18px !important;
 }

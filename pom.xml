@@ -13,7 +13,23 @@
 		<dependency>
 			<groupId>org.jogger</groupId>
 			<artifactId>jogger-core</artifactId>
-			<version>1.0.0-SNAPSHOT</version>
+			<version>0.3.1</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.1.3</version>
+		</dependency>   
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20090211</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.6.1</version>
 		</dependency>
 		
 		<dependency>
