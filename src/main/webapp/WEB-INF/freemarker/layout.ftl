@@ -4,7 +4,7 @@
 
 <html>
 <head>
-	<title>Trackr - Track your social stats</title>
+	<title>Trackr - Your social stats</title>
 	
 	<link rel="stylesheet" type="text/css" href="/stylesheets/bootstrap.css"></link>
 	<link rel="stylesheet" type="text/css" href="/stylesheets/style.css"></link>
@@ -13,6 +13,13 @@
 	<script src="/javascripts/jquery.js"></script>
 	<script src="/javascripts/bootstrap.js"></script>
 	<script src="/javascripts/highcharts.js"></script>
+	
+	<style type="text/css">
+		.fb_button_medium, .fb_button_medium_rtl {
+			font-size:14px !important;
+			line-height:18px !important;
+		}
+	</style>
 	
 </head>
 

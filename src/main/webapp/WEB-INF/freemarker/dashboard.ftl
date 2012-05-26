@@ -1,22 +1,21 @@
 <#ftl encoding="UTF-8">
 <#import "layout.ftl" as layout>
 <@layout.layout>
+
 	<div id="content" class="container">
 		<div class="row">
 			<div class="span8">
 				<h2>Today</h2>
-				<div class="count">
-					<strong>2</strong> 
-					<small>Tweets</small>
+				<div id="facebook" class="count">
+					<strong><img src="/images/ajax-loader.gif"></strong> 
+					<small>Facebook updates</small>
 				</div>
-				<div class="count">
-					<strong>3</strong> 
-					<small>Facebook Posts</small>
-				</div>
-				<div class="count">
-					<strong>1</strong> 
-					<small>Github Commits</small>
-				</div>
+				<#list user.services as service>
+					<div id="${service.name}" class="count">
+						<strong><img src="/images/ajax-loader.gif"></strong> 
+						<small>${service.label}</small>
+					</div>
+				</#list>
 				
 				<h2 style="clear:both; padding-top:30px;">Last 7 days</h2>
 				<div id="chart" style="height:300px; margin:20px;"></div>
@@ -26,19 +25,71 @@
 				<div id="services">
 					<ul>
 						<li>Facebook <span><img src="/images/ok.png" /></span></li>
-						<li>Twitter <span><img src="/images/ok.png" /></span></li>
-						<li>Github <span><button class="btn ">Activate</button></span></li>
+						<li>Twitter 
+							<span>
+								<#if user.hasService('twitter') >
+									<img src="/images/ok.png" />
+								<#else>
+									<button class="btn" data-toggle="modal" href="#twitter">Activate</button>
+								</#if>
+							</span>
+						</li>
+						<li>Github 
+							<span>
+								<#if user.hasService('github') >
+									<img src="/images/ok.png" />
+								<#else>
+									<button class="btn" data-toggle="modal" href="#github">Activate</button>
+								</#if>
+							</span>
+						</li>
 						<li class="disabled">Flickr <span>Soon</span></li>
 						<li class="disabled">Blogger <span>Soon</span></li>
 					</ul>
 				</div>
 			</div>
 		</div>
+		
+		<div class="modal hide fade" id="github" style="display:none;">
+  			<div class="modal-header">
+    			<button class="close" data-dismiss="modal">×</button>
+    			<h3>Activate Github</h3>
+  			</div>
+  			<div class="modal-body">
+    			<form class="form" style="width:500px; margin:auto;">
+    				<div class="field">
+    					<label for="github_user">Username:</label>
+						<input id="github_user" type="text" style="width:200px;"/>
+						<span class="error">Ingresa el usuario</span>
+    				</div>
+    				
+    			</form>
+  			</div>
+			<div class="modal-footer">
+    			<a id="activate_github" href="#" class="btn btn-primary">Activate</a>
+  			</div>
+		</div>
 
 	</div>
 	
 	<script type="text/javascript">
-		new Highcharts.Chart({
+	
+		$('#activate_github').click(function() {
+			
+			$.ajax({
+				type: 'POST',
+				url: '/user/services',
+				data: '{"user": "${user.id}",' 
+					+ '"username": 	"' + $('input#github_user').val() + '"}'
+			});
+			
+			request.done(function() {
+				alert("success");	
+			});
+		
+		});
+	
+		var chart = new Highcharts.Chart({
 				chart: {
 			    	renderTo: 'chart',
 			      	defaultSeriesType: 'line',
@@ -52,7 +103,7 @@
 			      	text: ''
 			   	},
 			   	xAxis: {
-			     	categories: [ '20 May', '21 May', '22 May', '23 May', '24 May', '25 May', '26 May' ]
+			     	categories: ${xLabels}
 			   	},
 			   	yAxis: {
 			     	title: {
@@ -78,18 +129,37 @@
 			       	y: 90,
 			       	borderWidth: 0
 			  	},
-			   	series: [{
-			      	name: 'Tweets',
-			       	data: [7, 2, 12, 5, 8, 10, 12]
-			     },
-			     {
-			      	name: 'Facebook',
-			       	data: [2, 1, 4, 2, 0, 3, 2]
-			     },
-			     {
-			      	name: 'Github',
-			       	data: [0, 0, 1, 3, 4, 5, 6]
-			     }]
+			   	series: []
 			});
+			
+			setTimeout(function() {
+				request = $.ajax({
+					type: 'GET',
+					url: '/user/stats?user=${user.id}&name=facebook'
+				});
+					
+				request.done(function(data) {
+					$('div#facebook strong').html(data.today);
+					chart.addSeries( { name: 'Facebook', data: data.data } );	
+				});
+					
+			}, 50);
+		
+			<#if user.hasService('twitter') >
+				setTimeout(function() {
+					request = $.ajax({
+						type: 'GET',
+						url: '/user/stats?user=${user.id}&name=twitter'
+					});
+					
+					request.done(function(data) {
+						$('div#twitter strong').html(data.today);
+						chart.addSeries( { name: 'Twitter', data: data.data } );	
+					});
+					
+				}, 50);
+			</#if>
+			
+		
 	</script>
 </@layout.layout>

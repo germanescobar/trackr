@@ -9,7 +9,7 @@ white; color:#333; font-family: Helvetica, Arial, sans-serif; ">track your socia
 		<p style="line-height: 1.4em; font-size: 24px; color: #666; text-shadow: 1px 1px 0 
 white; margin-top:25px;">From <em>Twitter updates</em> to <em>Github commits</em>, know how much content you are producing on the Web.</p>
 
-		<div style="padding-top:45px;" class="fb-login-button" scope="email,user_checkins" registration-url="/">Login with Facebook</div>
+		<div style="padding-top:45px;" class="fb-login-button" scope="read_stream,user_checkins,user_status">Login with Facebook</div>
 		
 	</div>
 	</div>
