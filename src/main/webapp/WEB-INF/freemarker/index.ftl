@@ -9,7 +9,7 @@
 			<div class="fb-login-button" scope="read_stream,user_checkins,user_status">Login with Facebook</div>
 		</div>
 		
-		<p>This project was created for the <strong><a href="http://wayra.org/es/wayra-developer-day-home" target="_blank">Wayra Developer Day 2012</a></strong>.</p> 
+		<p>This project was created for the <strong><a href="http://wayra.org/es/wayra-developer-day-home" target="_blank">Wayra Developer Day Colombia 2012</a></strong>.</p> 
 	
 		<p>It's a simple Web Application that shows the number of posts/tweets/commits that you have <em>generated</em> today - and the last 7 days -. By default, it will show only Facebook updates but you can activate other "services" as well (currently Twitter and Github are available). </p>
 

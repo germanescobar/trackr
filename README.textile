@@ -1,6 +1,6 @@
 h1. Tracker
 
-This project was created for the Wayra Developer Day 2012.
+This project was created for the Wayra Developer Day Colombia 2012.
 
 It's a simple Web Application that shows the number of posts/tweets/commits that you have generated today - and the last 7 days -. By default, it will show only Facebook updates but you can activate other "services" as well (currently Twitter and Github are available).
 
