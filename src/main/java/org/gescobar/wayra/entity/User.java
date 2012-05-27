@@ -12,7 +12,7 @@ public class User {
 	
 	private Date creationTime;
 	
-	private Collection<Service> services = new ArrayList<Service>();
+	private Collection<UserService> services = new ArrayList<UserService>();
 
 	public long getId() {
 		return id;
@@ -38,24 +38,40 @@ public class User {
 		this.creationTime = creationTime;
 	}
 
-	public Collection<Service> getServices() {
+	public Collection<UserService> getServices() {
 		return services;
 	}
 
-	public void setServices(Collection<Service> services) {
+	public void setServices(Collection<UserService> services) {
 		this.services = services;
+	}
+	
+	public void addService(UserService service) {
+		services.add(service);
 	}
 	
 	public boolean hasService(String name) {
 		boolean ret = false;
 		
-		for (Service service : services) {
+		for (UserService service : services) {
 			if (service.getName().equals(name)) {
 				ret = true;
 			}
 		}
 		
 		return ret;
+	}
+	
+	public UserService getService(String name) {
+		
+		for (UserService service : services) {
+			if (service.getName().equals(name)) {
+				return service;
+			}
+		}
+		
+		return null;
+		
 	}
 	
 }

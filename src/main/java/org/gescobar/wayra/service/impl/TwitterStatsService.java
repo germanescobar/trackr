@@ -1,4 +1,4 @@
-package org.gescobar.wayra.service;
+package org.gescobar.wayra.service.impl;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -13,22 +13,23 @@ import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.gescobar.wayra.service.StatisticsService;
+import org.gescobar.wayra.service.StatsDTO;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class FacebookStatsService implements StatsService {
+public class TwitterStatsService implements StatisticsService {
 
 	@Override
 	public StatsDTO buildStats(String data) {
 		
 		try {
-			String jsonString = getHTML("https://graph.facebook.com/me/feed?access_token=" + data);
 			
-			JSONObject json = new JSONObject( jsonString );
-			JSONArray feed = json.getJSONArray("data");
+			String jsonString = getHTML("http://api.twitter.com/1/statuses/user_timeline.json?screen_name=germanescobar");
+			JSONArray tweets = new JSONArray(jsonString);
 			
-			Collection<Date> updateDates = getPostsDates(feed);
+			Collection<Date> updateDates = getTweetsDates(tweets);
 			
 			int[] stats = new int[7];
 			Calendar cal = Calendar.getInstance();
@@ -68,29 +69,28 @@ public class FacebookStatsService implements StatsService {
 		
 	}
 	
-	private Collection<Date> getPostsDates(JSONArray feed) throws JSONException {
+	private Collection<Date> getTweetsDates(JSONArray tweets) throws JSONException {
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+		SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM dd HH:mm:ss ZZZZZ yyyy");
 		
 		Collection<Date> ret = new ArrayList<Date>();
 		
-		for (int i=0; i < feed.length(); i++) {
+		for (int i=0; i < tweets.length(); i++) {
+			JSONObject tweet = tweets.getJSONObject(i);
 			
-			JSONObject feedItem = feed.getJSONObject(i);
-			if ( feedItem.getString("type").equals("status") ) {
+			try {
+				String strCreatedAt = tweet.getString("created_at");
+				ret.add( sdf.parse(strCreatedAt) );
 				
-				try {
-					ret.add( sdf.parse(feedItem.getString("created_time")) );
-					
-				} catch (ParseException e) {
-					System.err.println("ParseException retrieving date: " + e.getMessage());
-					e.printStackTrace(System.err);
-				}
-				
+			} catch (ParseException e) {
+				System.err.println("ParseException retrieving date: " + e.getMessage());
+				e.printStackTrace(System.err);
 			}
+	
 		}
 		
 		return ret;
+		
 	}
 	
 	private String getHTML(String urlToRead) throws IOException {

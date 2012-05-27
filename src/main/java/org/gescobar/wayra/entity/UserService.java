@@ -2,15 +2,13 @@ package org.gescobar.wayra.entity;
 
 import java.util.Date;
 
-public class Service {
+public class UserService {
 	
 	private long id;
 	
 	private long userId;
 	
 	private String name;
-	
-	private String label;
 	
 	private String data;
 	
@@ -40,14 +38,6 @@ public class Service {
 		this.name = name;
 	}
 
-	public String getLabel() {
-		return label;
-	}
-
-	public void setLabel(String label) {
-		this.label = label;
-	}
-
 	public String getData() {
 		return data;
 	}
@@ -62,6 +52,18 @@ public class Service {
 
 	public void setCreationTime(Date creationTime) {
 		this.creationTime = creationTime;
+	}
+	
+	public String getLabel() {
+		if ("twitter".equals(name)) {
+			return "Tweets";
+		} else if ("github".equals(name)) {
+			return "Github Commits";
+		} else if ("flickr".equals(name)) {
+			return "Flickr Photos";
+		}
+		
+		return "Unknown";
 	}
 
 }

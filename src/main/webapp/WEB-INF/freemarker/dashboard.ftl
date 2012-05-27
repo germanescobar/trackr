@@ -69,6 +69,26 @@
     			<a id="activate_github" href="#" class="btn btn-primary">Activate</a>
   			</div>
 		</div>
+		
+		<div class="modal hide fade" id="twitter" style="display:none;">
+  			<div class="modal-header">
+    			<button class="close" data-dismiss="modal">×</button>
+    			<h3>Activate Twitter</h3>
+  			</div>
+  			<div class="modal-body">
+    			<form class="form" style="width:500px; margin:auto;">
+    				<div class="field">
+    					<label for="twitter_user">Username:</label>
+						<input id="twitter_user" type="text" style="width:200px;"/>
+						<span class="error">Ingresa el usuario</span>
+    				</div>
+    				
+    			</form>
+  			</div>
+			<div class="modal-footer">
+    			<a id="activate_twitter" href="#" class="btn btn-primary">Activate</a>
+  			</div>
+		</div>
 
 	</div>
 	
@@ -79,12 +99,29 @@
 			$.ajax({
 				type: 'POST',
 				url: '/user/services',
-				data: '{"user": "${user.id}",' 
-					+ '"username": 	"' + $('input#github_user').val() + '"}'
+				data: '{"userId": "${user.id?c}",'
+					+ '"service": "github",'  
+					+ '"data": 	"' + $('input#github_user').val() + '"}'
 			});
 			
 			request.done(function() {
-				alert("success");	
+				window.location.href = "/";	
+			});
+		
+		});
+		
+		$('#activate_twitter').click(function() {
+			
+			$.ajax({
+				type: 'POST',
+				url: '/user/services',
+				data: '{"userId": "${user.id?c}",'
+					+ '"service": "twitter",' 
+					+ '"data": 	"' + $('input#twitter_user').val() + '"}'
+			});
+			
+			request.done(function() {
+				window.location.href = "/";
 			});
 		
 		});
@@ -135,7 +172,7 @@
 			setTimeout(function() {
 				request = $.ajax({
 					type: 'GET',
-					url: '/user/stats?user=${user.id}&name=facebook'
+					url: '/user/stats?user=${user.id?c}&name=facebook'
 				});
 					
 				request.done(function(data) {
@@ -149,12 +186,27 @@
 				setTimeout(function() {
 					request = $.ajax({
 						type: 'GET',
-						url: '/user/stats?user=${user.id}&name=twitter'
+						url: '/user/stats?user=${user.id?c}&name=twitter'
 					});
 					
 					request.done(function(data) {
 						$('div#twitter strong').html(data.today);
 						chart.addSeries( { name: 'Twitter', data: data.data } );	
+					});
+					
+				}, 50);
+			</#if>
+			
+			<#if user.hasService('github') >
+				setTimeout(function() {
+					request = $.ajax({
+						type: 'GET',
+						url: '/user/stats?user=${user.id?c}&name=github'
+					});
+					
+					request.done(function(data) {
+						$('div#github strong').html(data.today);
+						chart.addSeries( { name: 'Github', data: data.data } );	
 					});
 					
 				}, 50);

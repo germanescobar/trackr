@@ -16,8 +16,10 @@ import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.gescobar.wayra.entity.Service;
 import org.gescobar.wayra.entity.User;
+import org.gescobar.wayra.entity.UserService;
+import org.gescobar.wayra.service.UserStore;
+import org.gescobar.wayra.service.mock.MockUserStore;
 import org.jogger.http.Cookie;
 import org.jogger.http.Request;
 import org.jogger.http.Response;
@@ -26,6 +28,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Pages {
+	
+	private UserStore userStore;
 
 	public void index(Request request, Response response) throws JSONException, IOException {
 		
@@ -73,21 +77,16 @@ public class Pages {
 			
 			JSONObject json = new JSONObject( jsonString );
 			
-			User user = new User();
-			user.setId( json.getLong("id") );
-			user.setName( json.getString("name") );
+			long userId = json.getLong("id");
+			User user = userStore.load(userId);
 			
-			Service twitterService = new Service();
-			twitterService.setId(1);
-			twitterService.setName("twitter");
-			twitterService.setLabel("Tweets");
-			twitterService.setData("germanescobar");
-			
-			
-			Collection<Service> services = new ArrayList<Service>();
-			services.add(twitterService);
-			
-			user.setServices(services);
+			if (user == null) {
+				user = new User();
+				user.setId( userId );
+				user.setName( json.getString("name") );
+				
+				userStore.create(user);
+			}
 			
 			return user;
 			
@@ -234,6 +233,16 @@ public class Pages {
 		} finally {
 			httpclient.getConnectionManager().shutdown();
 		}
+	}
+	
+	
+
+	public UserStore getUserStore() {
+		return userStore;
+	}
+
+	public void setUserStore(UserStore userStore) {
+		this.userStore = userStore;
 	}
 	
 }

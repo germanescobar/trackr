@@ -1,17 +1,57 @@
 <#ftl encoding="UTF-8">
 <#import "layout.ftl" as layout>
 <@layout.layout>
-	<div style="background-color:whiteSmoke; padding:60px 0 90px 0;">
-	<div class="container">
-		<h2 style="font-size:68px;padding-top:30px; text-shadow: 1px 1px 0 
-white; color:#333; font-family: Helvetica, Arial, sans-serif; ">track your social stats.</h2>
-
-		<p style="line-height: 1.4em; font-size: 24px; color: #666; text-shadow: 1px 1px 0 
-white; margin-top:25px;">From <em>Twitter updates</em> to <em>Github commits</em>, know how much content you are producing on the Web.</p>
-
-		<div style="padding-top:45px;" class="fb-login-button" scope="read_stream,user_checkins,user_status">Login with Facebook</div>
+	<div id="homepage" class="container">
 		
-	</div>
+		<div class="hero">
+			<h2>Track your social stats.</h2>
+			<p>From Facebook updates to Github commits, know how much content you are producing on the Web.</p>
+			<div class="fb-login-button" scope="read_stream,user_checkins,user_status">Login with Facebook</div>
+		</div>
+		
+		<p>This project was created for the <strong><a href="http://wayra.org/es/wayra-developer-day-home" target="_blank">Wayra Developer Day 2012</a></strong>.</p> 
+	
+		<p>It's a simple Web Application that shows the number of posts/tweets/commits that you have <em>generated</em> today - and the last 7 days -. By default, it will show only Facebook updates but you can activate other "services" as well (currently Twitter and Github are available). </p>
+
+		<p>Additionally, it will generate a nice graph of the last 7 days comparing the activity of your "services".</p>
+		
+		<h3>Technology Stack</h3>
+		
+		<h4>Front End</h4>
+		
+		<ul>
+			<li>HTML5</li>
+			<li><a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a></li>
+			<li>Javascript</li>
+			<li><a href="http://lesscss.org/" target="_blank">LESS</a></li>
+			<li><a href="http://jquery.org/" target="_blank">JQuery</a></li>
+			<li><a href="http://www.highcharts.com/" target="_blank">Highcharts</a></li>
+		</ul>
+		
+		<h4>Back End</h4>
+		
+		<ul>
+			<li>Java</li>
+			<li>Spring</li>
+			<li><strong><a href="http://github.com/germanescobar/jogger" target="_blank">Jogger</a></strong>. A Web Framework I made ;)</li>
+		</ul>
+		
+		<h4>Integration API's</h4>
+		
+		<ul>
+			<li><a href="http://developers.facebook.com/" target="_blank">Facebook</a></li>
+			<li><a href="https://dev.twitter.com/" target="_blank">Twitter</a></li>
+			<li><a href="http://develop.github.com/" target="_blank">Gihub</a></li>
+		</ul>
+		
+		<p>You can find an online version of this application at <a href="http://wayra-trackr.herokuapp.com/">http://wayra-trackr.herokuapp.com/</a>. The source code is at <a href="http://github.com/germanescobar/trackr">http://github.com/germanescobar/trackr</a>.</p>
+		
+		<h3>Contact</h3>
+		
+		<p>Find me on Twitter <a href="https://twitter.com/#!/germanescobar" target="_blank">@germanescobar</a> or email me at <a href="mailto:german.escobarc@gmail.com" target="_blank">german.escobarc@gmail.com</a>.</p>
+		
+		<div style="padding-top:80px;"></div>
+		
 	</div>
 	
 	<div id="fb-root"></div>

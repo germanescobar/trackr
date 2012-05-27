@@ -1,6 +1,6 @@
 package org.gescobar.wayra.service;
 
-public interface StatsService {
+public interface StatisticsService {
 
 	StatsDTO buildStats(String data);
 	

@@ -1,39 +1,39 @@
-package org.gescobar.wayra.service;
+package org.gescobar.wayra.service.impl;
 
 import java.io.IOException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.gescobar.wayra.service.StatisticsService;
+import org.gescobar.wayra.service.StatsDTO;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
+import org.springframework.expression.ParseException;
 
-public class TwitterStatsService implements StatsService {
+public class GithubStatsService implements StatisticsService {
 
 	@Override
 	public StatsDTO buildStats(String data) {
 		
 		try {
 			
-			String jsonString = getHTML("http://api.twitter.com/1/statuses/user_timeline.json?screen_name=germanescobar");
-			JSONArray tweets = new JSONArray(jsonString);
-			
-			Collection<Date> updateDates = getTweetsDates(tweets);
+			List<String> repos = getRepos(data);
+			Collection<Date> commitsDates = getCommitsDates(data, repos);
 			
 			int[] stats = new int[7];
 			Calendar cal = Calendar.getInstance();
 			for (int i=0; i < 7; i++) {
 				
-				int matches = matchesDate(updateDates, cal);
+				int matches = matchesDate(commitsDates, cal);
 				stats[6-i] = matches;
 				
 				cal.add(Calendar.DAY_OF_MONTH, -1);
@@ -67,27 +67,45 @@ public class TwitterStatsService implements StatsService {
 		
 	}
 	
-	private Collection<Date> getTweetsDates(JSONArray tweets) throws JSONException {
+	private List<String> getRepos(String username) throws Exception {
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM dd HH:mm:ss ZZZZZ yyyy");
+		List<String> repos = new ArrayList<String>();
 		
-		Collection<Date> ret = new ArrayList<Date>();
-		
-		for (int i=0; i < tweets.length(); i++) {
-			JSONObject tweet = tweets.getJSONObject(i);
-			
-			try {
-				String strCreatedAt = tweet.getString("created_at");
-				ret.add( sdf.parse(strCreatedAt) );
-				
-			} catch (ParseException e) {
-				System.err.println("ParseException retrieving date: " + e.getMessage());
-				e.printStackTrace(System.err);
-			}
-	
+		String jsonReposString = getHTML("https://api.github.com/users/" + username + "/repos");
+		JSONArray jsonProjects = new JSONArray(jsonReposString);
+		for (int i=0; i < jsonProjects.length(); i++) {
+			JSONObject jsonProject = jsonProjects.getJSONObject(i);
+			repos.add( jsonProject.getString("name") );
 		}
 		
-		return ret;
+		return repos;
+		
+	}
+	
+	private Collection<Date> getCommitsDates(String username, Collection<String> repos) throws Exception {
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+		
+		Collection<Date> commitsDates = new ArrayList<Date>();
+		
+		for (String repo : repos) {
+			
+			String jsonCommitsString = getHTML("https://api.github.com/repos/" + username + "/" + repo + "/commits");
+			
+			JSONArray jsonCommits = new JSONArray(jsonCommitsString);
+			for (int j=0; j < jsonCommits.length(); j++) {
+				JSONObject jsonCommit = jsonCommits.getJSONObject(j);
+				JSONObject jsonCommiter = jsonCommit.getJSONObject("commit").getJSONObject("committer");
+				try {
+					commitsDates.add( sdf.parse(jsonCommiter.getString("date")) );
+					
+				} catch (ParseException e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		
+		return commitsDates;
 		
 	}
 	

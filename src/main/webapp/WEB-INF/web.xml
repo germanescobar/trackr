@@ -4,13 +4,19 @@
     	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_3.0.xsd">
 	
+	<context-param>
+   		<param-name>contextConfigLocation</param-name>
+   		<param-value>
+   			/WEB-INF/ext-context.xml
+       		/WEB-INF/application-context.xml
+   		</param-value>
+	</context-param>
+	
+	<listener><listener-class>org.springframework.web.context.ContextLoaderListener</listener-class></listener>
+	
 	<servlet>
 		<servlet-name>JoggerServlet</servlet-name>
 		<servlet-class>org.jogger.JoggerServlet</servlet-class>
-		<init-param>
-			<param-name>basePackage</param-name>
-			<param-value>org.gescobar.wayra.controllers</param-value>
-		</init-param>
 		<init-param>
 			<param-name>interceptorsClass</param-name>
 			<param-value>org.gescobar.wayra.interceptors.AppInterceptors</param-value>
