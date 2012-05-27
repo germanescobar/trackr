@@ -27,7 +27,3 @@ h3.Integration API's
 * Gihub
 
 You can find an online version of this application at http://wayra-trackr.herokuapp.com/. The source code is at http://github.com/germanescobar/trackr.
-
-Contact
-
-Find me on Twitter @germanescobar or email me at german.escobarc@gmail.com.
