@@ -1,0 +1,33 @@
+h1. Tracker
+
+This project was created for the Wayra Developer Day 2012.
+
+It's a simple Web Application that shows the number of posts/tweets/commits that you have generated today - and the last 7 days -. By default, it will show only Facebook updates but you can activate other "services" as well (currently Twitter and Github are available).
+
+Additionally, it will generate a nice graph of the last 7 days comparing the activity of your "services".
+
+h2. Technology Stack
+
+h3. Front End
+* HTML5
+* Twitter Bootstrap
+* Javascript
+* LESS
+* JQuery
+* Highcharts
+
+h3. Back End
+* Java
+* Spring
+* Jogger. A Web Framework I made ;)
+
+h3.Integration API's
+* Facebook
+* Twitter
+* Gihub
+
+You can find an online version of this application at http://wayra-trackr.herokuapp.com/. The source code is at http://github.com/germanescobar/trackr.
+
+Contact
+
+Find me on Twitter @germanescobar or email me at german.escobarc@gmail.com.
