@@ -10,6 +10,8 @@
 			http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
 			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
 
+	<context:property-placeholder />
+
 	 <!-- Controllers -->
     <bean id="pages" class="org.gescobar.wayra.controllers.Pages" scope="prototype">
     	<property name="userStore" ref="userStore" />
@@ -23,7 +25,9 @@
     </bean>
     
     <!-- Services -->
-    <bean id="userStore" class="org.gescobar.wayra.service.mock.MockUserStore" />
+    <bean id="userStore" class="org.gescobar.wayra.service.impl.JdbcUserStore">
+    	<property name="dataSource" ref="dataSource" />
+    </bean>
     
     <bean id="statisticsServiceFactory" class="org.gescobar.wayra.service.StatisticsServiceFactory">
     	<property name="statisticsServices">
@@ -34,5 +38,21 @@
     		</map>
     	</property>
     </bean>
+    
+    <bean id="postgresInit" class="org.gescobar.wayra.util.PostgresInit" init-method="init">
+    	<property name="dataSource" ref="dataSource" />
+    </bean>
+    
+    <!-- Database Configuration -->
+	<bean id="dbUri" class="org.gescobar.wayra.util.DatabaseUri">
+    	<constructor-arg value="${DATABASE_URL:postgres://postgres:elibom@localhost:5432/trackr}"/>
+	</bean>
+	
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+    	<property name="driverClassName" value="org.postgresql.Driver"/>
+    	<property name="url" value="#{ @dbUri.getUrl() }" />
+    	<property name="username" value="#{ @dbUri.getUsername() }"/>
+    	<property name="password" value="#{ @dbUri.getPassword() }"/>
+	</bean>
     
 </beans>
