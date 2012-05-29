@@ -1,6 +1,7 @@
 package org.gescobar.wayra.service.impl;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -17,7 +18,6 @@ import org.gescobar.wayra.service.StatisticsService;
 import org.gescobar.wayra.service.StatsDTO;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.springframework.expression.ParseException;
 
 public class GithubStatsService implements StatisticsService {
 
@@ -84,12 +84,12 @@ public class GithubStatsService implements StatisticsService {
 	
 	private Collection<Date> getCommitsDates(String username, Collection<String> repos) throws Exception {
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		
 		Collection<Date> commitsDates = new ArrayList<Date>();
 		
 		for (String repo : repos) {
-			
+
 			String jsonCommitsString = getHTML("https://api.github.com/repos/" + username + "/" + repo + "/commits");
 			
 			JSONArray jsonCommits = new JSONArray(jsonCommitsString);
@@ -97,8 +97,9 @@ public class GithubStatsService implements StatisticsService {
 				JSONObject jsonCommit = jsonCommits.getJSONObject(j);
 				JSONObject jsonCommiter = jsonCommit.getJSONObject("commit").getJSONObject("committer");
 				try {
-					commitsDates.add( sdf.parse(jsonCommiter.getString("date")) );
-					
+					String jsonCommitDate = jsonCommiter.getString("date");
+					Date commitDate = sdf.parse( jsonCommitDate.substring(0, 10) );
+					commitsDates.add( commitDate );
 				} catch (ParseException e) {
 					e.printStackTrace(System.err);
 				}
@@ -124,4 +125,11 @@ public class GithubStatsService implements StatisticsService {
 		}
 	}
 
+	public static void main(String[] args) throws Exception {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+		
+		Date date = sdf.parse("2012-05-29T09:58:33-0700");
+		
+		System.out.println(date);
+	}
 }
