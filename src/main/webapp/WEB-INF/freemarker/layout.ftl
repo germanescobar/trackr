@@ -9,6 +9,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	
 	<link rel="stylesheet" type="text/css" href="/stylesheets/bootstrap.css"></link>
+	<link rel="stylesheet" type="text/css" href="/stylesheets/bootstrap-responsive.css"></link>
 	<link rel="stylesheet" type="text/css" href="/stylesheets/style.css"></link>
 	
 	<script src="/javascripts/underscore.js"></script>
