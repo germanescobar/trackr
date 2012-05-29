@@ -8,7 +8,7 @@ public class AppInterceptors extends Interceptors {
 
 	@Override
 	public void initialize(ServletConfig servletConfig) {
-		
+		add( new FacebookInterceptor() );
 	}
 
 }
