@@ -1,6 +1,5 @@
 package org.gescobar.wayra.service.impl;
 
-import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -8,11 +7,6 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.BasicResponseHandler;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.gescobar.wayra.service.StatisticsService;
 import org.gescobar.wayra.service.StatsDTO;
 import org.json.JSONArray;
@@ -25,7 +19,7 @@ public class FacebookStatsService implements StatisticsService {
 	public StatsDTO buildStats(String data) {
 		
 		try {
-			String jsonString = getHTML("https://graph.facebook.com/me/feed?access_token=" + data);
+			String jsonString = StatsServiceHelper.getHTML("https://graph.facebook.com/me/feed?access_token=" + data);
 			
 			JSONObject json = new JSONObject( jsonString );
 			JSONArray feed = json.getJSONArray("data");
@@ -36,7 +30,7 @@ public class FacebookStatsService implements StatisticsService {
 			Calendar cal = Calendar.getInstance();
 			for (int i=0; i < 7; i++) {
 				
-				int matches = matchesDate(updateDates, cal);
+				int matches = StatsServiceHelper.matchesDate(updateDates, cal);
 				stats[6-i] = matches;
 				
 				cal.add(Calendar.DAY_OF_MONTH, -1);
@@ -50,24 +44,6 @@ public class FacebookStatsService implements StatisticsService {
 		}
 		
 		return new StatsDTO(0,0,0,0,0,0,0);
-	}
-	
-	private int matchesDate(Collection<Date> updateDates, Calendar cal) {
-		
-		int matches = 0;
-		for (Date updateDate : updateDates) {
-			Calendar calendar = Calendar.getInstance();
-			calendar.setTime(updateDate);
-			
-			boolean sameDay = cal.get(Calendar.YEAR) == calendar.get(Calendar.YEAR) &&
-            	cal.get(Calendar.DAY_OF_YEAR) == calendar.get(Calendar.DAY_OF_YEAR);
-			if (sameDay) {
-				matches++;
-			}
-		}
-		
-		return matches;
-		
 	}
 	
 	private Collection<Date> getPostsDates(JSONArray feed) throws JSONException {
@@ -95,19 +71,6 @@ public class FacebookStatsService implements StatisticsService {
 		return ret;
 	}
 	
-	private String getHTML(String urlToRead) throws IOException {
-		
-		HttpClient httpclient = new DefaultHttpClient();
-		
-		try {
-			HttpGet httpget = new HttpGet( urlToRead );
-			ResponseHandler<String> responseHandler = new BasicResponseHandler();
-			
-			return httpclient.execute(httpget, responseHandler);
-			
-		} finally {
-			httpclient.getConnectionManager().shutdown();
-		}
-	}
+	
 
 }
