@@ -44,7 +44,7 @@
 			<li><a href="http://develop.github.com/" target="_blank">Gihub</a></li>
 		</ul>
 		
-		<p>You can find an online version of this application at <a href="http://wayra-trackr.herokuapp.com/">http://wayra-trackr.herokuapp.com/</a>. The source code is at <a href="http://github.com/germanescobar/trackr">http://github.com/germanescobar/trackr</a>.</p>
+		<p>You can find an online version of this application at <a href="http://wayra-trackr.herokuapp.com/">here</a>. The source code is at <a href="http://github.com/germanescobar/trackr">Github</a>.</p>
 		
 		<h3>Contact</h3>
 		
