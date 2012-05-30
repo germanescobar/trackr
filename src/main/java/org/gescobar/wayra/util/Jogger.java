@@ -1,5 +1,10 @@
 package org.gescobar.wayra.util;
 
+/**
+ * Helper class to retrieve the Jogger environment in which we are working.
+ * 
+ * @author German Escobar
+ */
 public class Jogger {
 
 	public static String env() {

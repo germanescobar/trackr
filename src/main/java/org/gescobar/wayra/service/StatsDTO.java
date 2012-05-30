@@ -1,5 +1,10 @@
 package org.gescobar.wayra.service;
 
+/**
+ * A convenient class that stores the stats of the last 7 days of a service. 
+ * 
+ * @author German Escobar
+ */
 public class StatsDTO {
 
 	private int[] stats = new int[7];

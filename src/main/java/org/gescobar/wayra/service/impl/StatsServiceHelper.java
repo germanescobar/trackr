@@ -10,6 +10,7 @@ import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.gescobar.wayra.service.StatsDTO;
 
 public class StatsServiceHelper {
 	
@@ -26,6 +27,22 @@ public class StatsServiceHelper {
 		} finally {
 			httpclient.getConnectionManager().shutdown();
 		}
+	}
+	
+	public static StatsDTO buildStats(Collection<Date> dates) {
+		
+		int[] stats = new int[7];
+		Calendar cal = Calendar.getInstance();
+		for (int i=0; i < 7; i++) {
+			
+			int matches = StatsServiceHelper.matchesDate(dates, cal);
+			stats[6-i] = matches;
+			
+			cal.add(Calendar.DAY_OF_MONTH, -1);
+		}
+		
+		return new StatsDTO(stats);
+		
 	}
 	
 	public static int matchesDate(Collection<Date> updateDates, Calendar cal) {

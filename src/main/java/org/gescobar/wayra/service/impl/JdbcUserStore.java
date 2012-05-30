@@ -14,6 +14,11 @@ import org.gescobar.wayra.entity.User;
 import org.gescobar.wayra.entity.UserService;
 import org.gescobar.wayra.service.UserStore;
 
+/**
+ * A {@link UserStore} implementation based on JDBC.
+ * 
+ * @author German Escobar
+ */
 public class JdbcUserStore implements UserStore {
 	
 	private DataSource dataSource;
@@ -184,10 +189,6 @@ public class JdbcUserStore implements UserStore {
 			
 		}
 		
-	}
-
-	public DataSource getDataSource() {
-		return dataSource;
 	}
 
 	public void setDataSource(DataSource dataSource) {

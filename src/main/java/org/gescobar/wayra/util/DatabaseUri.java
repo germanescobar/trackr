@@ -3,6 +3,12 @@ package org.gescobar.wayra.util;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+/**
+ * Helper class used to divide a database URI. It exists because Heroku sends a complete string of the database URI 
+ * with username and password. We need to retrieve the username and password separately to configure the data source.
+ * 
+ * @author German Escobar
+ */
 public class DatabaseUri {
 	
 	private URI uri;

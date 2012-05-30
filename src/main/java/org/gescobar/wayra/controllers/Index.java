@@ -17,15 +17,28 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * 
+ * Controller. Renders the index/dashboard screen.
  * 
  * @author German Escobar
  */
-public class Pages {
+public class Index {
 	
+	/**
+	 * Used to create and retrieve users.
+	 */
 	private UserStore userStore;
 
-	public void index(Request request, Response response) throws JSONException, IOException {
+	/**
+	 * Controller method. If the user is authenticated, it renders the 'dashboard.ftl' template which shows the stats. 
+	 * Otherwise, it renders the 'index.ftl' template that allows the user to login.
+	 * 
+	 * @param request
+	 * @param response
+	 * 
+	 * @throws JSONException
+	 * @throws IOException
+	 */
+	public void show(Request request, Response response) throws JSONException, IOException {
 		
 		// get the user 
 		User user = getUser( request.getCookie("accessToken") );
@@ -44,6 +57,11 @@ public class Pages {
 		
 	}
 	
+	/**
+	 * Helper method. Retrieves the last 7 days as a string JSON array with format 'dd MMM'. 
+	 * 
+	 * @return a String object holding a JSON array.
+	 */
 	private String getLastDaysForChart() {
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd MMM");
@@ -66,6 +84,15 @@ public class Pages {
 		return strDays;
 	}
 	
+	/**
+	 * Helper method. Retrieves the {@link User} from the cookie that is received as argument. If the user is not 
+	 * found in the store it is created.
+	 * 
+	 * @param cookie the cookie that holds the access token of the user.
+	 * 
+	 * @return the User if the cookie is not null, null otherwise.
+	 * @throws JSONException
+	 */
 	private User getUser(Cookie cookie) throws JSONException {
 		
 		if (cookie == null) {

@@ -8,6 +8,11 @@ import java.sql.Statement;
 
 import javax.sql.DataSource;
 
+/**
+ * Helper class to initialize the PostgreSQL database.
+ * 
+ * @author German Escobar
+ */
 public class PostgresInit {
 	
 	private DataSource dataSource;

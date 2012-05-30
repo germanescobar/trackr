@@ -11,15 +11,15 @@
 			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
 
 	<context:property-placeholder />
+	
+	<!-- Interceptors -->
+	<bean id="facebookInterceptor" class="org.gescobar.wayra.interceptors.FacebookInterceptor" />
 
 	 <!-- Controllers -->
-    <bean id="pages" class="org.gescobar.wayra.controllers.Pages" scope="prototype">
+    <bean id="index" class="org.gescobar.wayra.controllers.Index" scope="prototype">
     	<property name="userStore" ref="userStore" />
     </bean>
-    <bean id="services" class="org.gescobar.wayra.controllers.Services" scope="prototype">
-    	<property name="userStore" ref="userStore" />
-    </bean>
-    <bean id="stats" class="org.gescobar.wayra.controllers.Stats" scope="prototype">
+    <bean id="users" class="org.gescobar.wayra.controllers.Users" scope="prototype">
     	<property name="userStore" ref="userStore" />
     	<property name="statisticsServiceFactory" ref="statisticsServiceFactory" />
     </bean>

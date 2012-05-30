@@ -2,6 +2,11 @@ package org.gescobar.wayra.entity;
 
 import java.util.Date;
 
+/**
+ * Represents a user service in the persistence store.
+ * 
+ * @author German Escobar
+ */
 public class UserService {
 	
 	private long id;

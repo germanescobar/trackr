@@ -1,14 +1,21 @@
 package org.gescobar.wayra.interceptors;
 
-import javax.servlet.ServletConfig;
+import org.jogger.config.spring.SpringInterceptors;
 
-import org.jogger.config.Interceptors;
-
-public class AppInterceptors extends Interceptors {
+/**
+ * Defines the interceptors of the application. It is configured in the web.xml file.
+ * 
+ * @author German Escobar
+ */
+public class AppInterceptors extends SpringInterceptors {
 
 	@Override
-	public void initialize(ServletConfig servletConfig) {
-		add( new FacebookInterceptor() );
+	public void initialize() {
+		
+		// sets the Facebook API key in the response properties
+		add( "facebookInterceptor" );
 	}
+
+	
 
 }

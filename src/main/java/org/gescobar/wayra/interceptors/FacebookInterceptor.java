@@ -6,6 +6,11 @@ import org.jogger.InterceptorChain;
 import org.jogger.http.Request;
 import org.jogger.http.Response;
 
+/**
+ * Sets the Facebook API key in the response.
+ * 
+ * @author German Escobar
+ */
 public class FacebookInterceptor implements Interceptor {
 
 	@Override

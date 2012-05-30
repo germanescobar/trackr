@@ -4,6 +4,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
+/**
+ * Represents a user in the persistence store.
+ * 
+ * @author German Escobar
+ */
 public class User {
 
 	private long id;
