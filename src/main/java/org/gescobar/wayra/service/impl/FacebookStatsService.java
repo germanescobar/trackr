@@ -54,6 +54,7 @@ public class FacebookStatsService implements StatisticsService {
 		
 		// get the feed
 		String jsonString = StatsServiceHelper.getHTML("https://graph.facebook.com/me/feed?access_token=" + accessToken);
+		System.out.println(jsonString);
 		JSONArray feed = new JSONObject( jsonString ).getJSONArray("data");
 		
 		for (int i=0; i < feed.length(); i++) {
@@ -61,7 +62,8 @@ public class FacebookStatsService implements StatisticsService {
 			JSONObject feedItem = feed.getJSONObject(i);
 			
 			// if this is a status feed item add it to the collection
-			if ( feedItem.getString("type").equals("status") ) {
+			String type = feedItem.getString("type");
+			if ( type.equals("status") || type.equals("link") ) {
 
 				try {
 					ret.add( parse(feedItem.getString("created_time")) );
