@@ -172,7 +172,7 @@
 			setTimeout(function() {
 				request = $.ajax({
 					type: 'GET',
-					url: '/user/stats?user=${user.id?c}&name=facebook'
+					url: '/user/${user.id?c}/stats?service=facebook'
 				});
 					
 				request.done(function(data) {
@@ -186,7 +186,7 @@
 				setTimeout(function() {
 					request = $.ajax({
 						type: 'GET',
-						url: '/user/stats?user=${user.id?c}&name=twitter'
+						url: '/user/${user.id?c}/stats?service=twitter'
 					});
 					
 					request.done(function(data) {
@@ -201,7 +201,7 @@
 				setTimeout(function() {
 					request = $.ajax({
 						type: 'GET',
-						url: '/user/stats?user=${user.id?c}&name=github'
+						url: '/user/${user.id?c}/stats?service=github'
 					});
 					
 					request.done(function(data) {

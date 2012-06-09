@@ -81,7 +81,7 @@
 	</dependencies>
 	
 	<properties>
-		<jogger.version>0.3.1</jogger.version>
+		<jogger.version>0.4.1</jogger.version>
 		<spring.version>3.1.1.RELEASE</spring.version>
 		<slf4j.version>1.6.3</slf4j.version>
 	</properties>

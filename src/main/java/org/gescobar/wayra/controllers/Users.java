@@ -1,11 +1,7 @@
 package org.gescobar.wayra.controllers;
 
-import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.List;
 
-import org.apache.http.NameValuePair;
-import org.apache.http.client.utils.URLEncodedUtils;
 import org.gescobar.wayra.entity.User;
 import org.gescobar.wayra.entity.UserService;
 import org.gescobar.wayra.service.StatisticsService;
@@ -77,8 +73,8 @@ public class Users {
 		response.contentType("application/json");
 		
 		// get the user and service
-		long userId = Long.parseLong( getParameter(request.getQueryString(), "user") );
-		String serviceName = getParameter(request.getQueryString(), "name");
+		long userId = request.getPathVariable("userId").asLong();
+		String serviceName = request.getParameter("service").asString();
 		
 		// retrieve the statistics service
 		StatisticsService statsService = statisticsServiceFactory.get(serviceName);
@@ -104,28 +100,6 @@ public class Users {
 		
 		response.print( jsonResponse.toString() );
 		
-	}
-	
-	/**
-	 * Helper method. Retrieves the parameter of a query string. Definitely a functionality that Jogger should include. 
-	 * 
-	 * @param queryString the query string of the URL.
-	 * @param parameter the parameter that we need to retrieve.
-	 * 
-	 * @return the value of the parameter or null if not found.
-	 * @throws URISyntaxException
-	 */
-	private String getParameter(String queryString, String parameter) throws URISyntaxException {
-		
-		List<NameValuePair> pairs = URLEncodedUtils.parse(new URI("http://localhost/?" + queryString), "UTF-8");
-		
-		for (NameValuePair pair : pairs) {
-			if (pair.getName().equals(parameter)) {
-				return pair.getValue();
-			}
-		}
-		
-		return null;
 	}
 
 	public void setUserStore(UserStore userStore) {
