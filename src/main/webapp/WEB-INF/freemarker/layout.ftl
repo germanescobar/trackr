@@ -25,7 +25,7 @@
 	
 	<script src="/javascripts/underscore.js"></script>
 	<script src="/javascripts/jquery.js"></script>
-	<script src="/javascripts/bootstrap.js"></script>
+	<script src="/javascripts/bootstrap.min.js"></script>
 	<script src="/javascripts/highcharts.js"></script>
 	
 </head>
